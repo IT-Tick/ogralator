@@ -18,12 +18,12 @@ class Calculator extends StatelessWidget {
     final Store<AppState> store;
     Calculator({Key key, @required this.store}) : super(key: key);
 
-    void _fareChanged (text) {
+    void _fareChanged(text) {
         final double newFare = text.isEmpty ? 0 : double.parse(text);
         store.dispatch(EditFareAction(newFare));
     }
 
-    void _newPassengersGroup () {
+    void _newPassengersGroup() {
         store.dispatch(AddPassengersGroupAction(PassengersGroup.initialState()));
     }
 
@@ -75,6 +75,7 @@ class Calculator extends StatelessWidget {
                                                 numberOfPassengers: numberOfPassengers,
                                                 paidMoney: paidMoney
                                             )),
+                                            removeCard: () => store.dispatch(DeletePassengersGroupAction(group)),
                                         ),
                                     ).toList()
                                 ),
