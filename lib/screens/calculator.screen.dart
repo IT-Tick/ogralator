@@ -41,51 +41,55 @@ class Calculator extends StatelessWidget {
                 // the App.build method, and use it to set our appbar title.
                 title: Center(child: Text('أجرة لاتور')),
             ),
-            body: Padding(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                        TextField(
-                            decoration: InputDecoration(labelText: "الأجرة كام ياسطى؟"),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                                WhitelistingTextInputFormatter(doubleRegExp)
-                            ], // Only numbers can be entered
-                            onChanged: _fareChanged
-                        ),
-                        SizedBox(height: 20),
-                        ListView(
-                            shrinkWrap: true,
-                            children: store.state.passengersGroups.map((group) =>
-                                PassengersGroupCard(
-                                    fare: store.state.fare,
-                                    group: group,
-                                    updateGroup: ({int numberOfPassengers, double paidMoney}) => store.dispatch(EditPassengersGroupAction(
-                                        group,
-                                        numberOfPassengers: numberOfPassengers,
-                                        paidMoney: paidMoney
-                                    )),
+            body: ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                                TextField(
+                                    decoration: InputDecoration(labelText: "الأجرة كام ياسطى؟"),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                        WhitelistingTextInputFormatter(doubleRegExp)
+                                    ], // Only numbers can be entered
+                                    onChanged: _fareChanged
                                 ),
-                            ).toList()
-                        ),
+                                SizedBox(height: 20),
+                                Column(
+                                    children: store.state.passengersGroups.map((group) =>
+                                        PassengersGroupCard(
+                                            fare: store.state.fare,
+                                            group: group,
+                                            updateGroup: ({int numberOfPassengers, double paidMoney}) => store.dispatch(EditPassengersGroupAction(
+                                                group,
+                                                numberOfPassengers: numberOfPassengers,
+                                                paidMoney: paidMoney
+                                            )),
+                                        ),
+                                    ).toList()
+                                ),
 
-                        ButtonTheme(
-                            height: 50,
-                            minWidth: double.infinity,
-                            child: RaisedButton.icon(
-                                onPressed: _newPassengersGroup,
-                                color: Colors.blue,
-                                textColor: Colors.white,
-                                label: Text("لم أجرة"),
-                                icon: Icon(
-                                    Icons.add
+                                ButtonTheme(
+                                    height: 50,
+                                    minWidth: double.infinity,
+                                    child: RaisedButton.icon(
+                                        onPressed: _newPassengersGroup,
+                                        color: Colors.blue,
+                                        textColor: Colors.white,
+                                        label: Text("لم أجرة"),
+                                        icon: Icon(
+                                            Icons.add
+                                        )
+                                    )
                                 )
-                            )
-                        )
-                    ],
-                ),
+                            ],
+                        ),
+                    )
+                ],
             )
         );
     }
