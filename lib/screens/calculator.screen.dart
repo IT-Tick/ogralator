@@ -50,15 +50,21 @@ class Calculator extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                                TextField(
+                                TextFormField(
                                     decoration: InputDecoration(labelText: "الأجرة كام ياسطى؟"),
+                                    initialValue: store.state.fare.toString(),
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
                                         WhitelistingTextInputFormatter(doubleRegExp)
                                     ], // Only numbers can be entered
-                                    onChanged: _fareChanged
+                                    onChanged: _fareChanged,
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                    )
                                 ),
+
                                 SizedBox(height: 20),
+
                                 Column(
                                     children: store.state.passengersGroups.map((group) =>
                                         PassengersGroupCard(
