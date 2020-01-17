@@ -8,4 +8,6 @@ class PassengersGroup {
         @required this.numberOfPassengers,
         @required this.paidMoney
     });
+
+    PassengersGroup.initialState() : numberOfPassengers = 0, paidMoney = 0;
 }
