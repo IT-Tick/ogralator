@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ogralator/selectors/totalRemainder.selector.dart';
 import 'package:redux/redux.dart';
 
 import 'package:ogralator/utils/regExp.dart';
@@ -41,60 +42,88 @@ class Calculator extends StatelessWidget {
                 // the App.build method, and use it to set our appbar title.
                 title: Center(child: Text('أجرة لاتور')),
             ),
-            body: ListView(
-                shrinkWrap: true,
+            body: Column(
                 children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                    Expanded(
+                        child: ListView(
+                            shrinkWrap: true,
                             children: <Widget>[
-                                TextFormField(
-                                    decoration: InputDecoration(labelText: "الأجرة كام ياسطى؟"),
-                                    initialValue: store.state.fare.toString(),
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                        WhitelistingTextInputFormatter(doubleRegExp)
-                                    ], // Only numbers can be entered
-                                    onChanged: _fareChanged,
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                    )
-                                ),
+                                Padding(
+                                    padding: EdgeInsets.all(20),
+                                    child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                            TextField(
+                                                decoration: InputDecoration(labelText: "الأجرة كام ياسطى؟"),
+                                                keyboardType: TextInputType.number,
+                                                inputFormatters: <TextInputFormatter>[
+                                                    WhitelistingTextInputFormatter(doubleRegExp)
+                                                ], // Only numbers can be entered
+                                                onChanged: _fareChanged,
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                )
+                                            ),
 
-                                SizedBox(height: 20),
+                                            SizedBox(height: 20),
 
-                                Column(
-                                    children: store.state.passengersGroups.map((group) =>
-                                        PassengersGroupCard(
-                                            fare: store.state.fare,
-                                            group: group,
-                                            updateGroup: ({int numberOfPassengers, double paidMoney}) => store.dispatch(EditPassengersGroupAction(
-                                                group,
-                                                numberOfPassengers: numberOfPassengers,
-                                                paidMoney: paidMoney
-                                            )),
-                                            removeCard: () => store.dispatch(DeletePassengersGroupAction(group)),
-                                        ),
-                                    ).toList()
-                                ),
+                                            Column(
+                                                children: store.state.passengersGroups.map((group) =>
+                                                    Container(
+                                                        child: PassengersGroupCard(
+                                                            fare: store.state.fare ?? 0,
+                                                            group: group,
+                                                            updateGroup: ({int numberOfPassengers, double paidMoney}) => store.dispatch(EditPassengersGroupAction(
+                                                                group,
+                                                                numberOfPassengers: numberOfPassengers,
+                                                                paidMoney: paidMoney
+                                                            )),
+                                                            removeCard: () => store.dispatch(DeletePassengersGroupAction(group)),
+                                                        ),
+                                                    )
+                                                ).toList()
+                                            ),
 
-                                ButtonTheme(
-                                    height: 50,
-                                    minWidth: double.infinity,
-                                    child: RaisedButton.icon(
-                                        onPressed: _newPassengersGroup,
-                                        color: Colors.blue,
-                                        textColor: Colors.white,
-                                        label: Text("لم أجرة"),
-                                        icon: Icon(
-                                            Icons.add
-                                        )
-                                    )
+                                            ButtonTheme(
+                                                height: 50,
+                                                minWidth: double.infinity,
+                                                child: RaisedButton.icon(
+                                                    onPressed: _newPassengersGroup,
+                                                    color: Colors.blue,
+                                                    textColor: Colors.white,
+                                                    label: Text("لم أجرة"),
+                                                    icon: Icon(
+                                                        Icons.add
+                                                    )
+                                                )
+                                            )
+                                        ],
+                                    ),
                                 )
                             ],
                         ),
+                    ),
+                    SizedBox(
+                        width: double.infinity,
+                        height: 60,
+                        child: Container(
+                            decoration: const BoxDecoration(
+                                color: Colors.blue,
+                                border: Border(
+                                    top: BorderSide( width: 1, color: Colors.white )
+                                )
+                            ),
+                            child: Center(
+                                child: Text(
+                                    "اجمالي الباقي : "+totalRemainder(store.state).toString(),
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white
+                                    ),
+                                ),
+                            ),
+                        )
                     )
                 ],
             )

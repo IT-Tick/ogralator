@@ -59,9 +59,8 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
                                     Row(
                                         children: <Widget>[
                                             Expanded(
-                                                child: TextFormField(
+                                                child: TextField(
                                                     decoration: InputDecoration(labelText: "كام نفر؟"),
-                                                    initialValue: widget.group.numberOfPassengers.toString(),
                                                     keyboardType: TextInputType.number,
                                                     inputFormatters: <TextInputFormatter>[
                                                         WhitelistingTextInputFormatter.digitsOnly
@@ -71,9 +70,8 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
                                             ),
                                             SizedBox(width: 10),
                                             Expanded(
-                                                child: TextFormField(
+                                                child: TextField(
                                                     decoration: InputDecoration(labelText: "الفلوس"),
-                                                    initialValue: widget.group.paidMoney.toString(),
                                                     keyboardType: TextInputType.number,
                                                     inputFormatters: <TextInputFormatter>[
                                                         WhitelistingTextInputFormatter(doubleRegExp)
