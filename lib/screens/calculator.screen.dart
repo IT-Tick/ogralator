@@ -65,7 +65,7 @@ class Calculator extends StatelessWidget {
                           children: <Widget>[
                             TextField(
                                 decoration: InputDecoration(
-                                    labelText: "الأجرة كام ياسطى؟"),
+                                    labelText: "الأجرة كام"),
                                 keyboardType: TextInputType.number,
                                 inputFormatters: <TextInputFormatter>[
                                   WhitelistingTextInputFormatter(doubleRegExp)
@@ -73,7 +73,6 @@ class Calculator extends StatelessWidget {
                                 onChanged: _fareChanged,
                                 style: TextStyle(
                                   fontSize: 20,
-                                  decorationColor: statusBarColor,
                                 )),
                             SizedBox(height: 20),
                             Column(
