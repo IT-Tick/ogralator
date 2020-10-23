@@ -63,6 +63,7 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
                     children: <Widget>[
                       Expanded(
                         child: TextField(
+                          cursorColor: Colors.black,
                           decoration: InputDecoration(labelText: "كام نفر"),
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
@@ -74,6 +75,7 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
                       SizedBox(width: 10),
                       Expanded(
                         child: TextField(
+                          cursorColor: Colors.black,
                           decoration: InputDecoration(labelText: "الفلوس"),
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[

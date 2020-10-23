@@ -31,7 +31,6 @@ class Calculator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -44,7 +43,7 @@ class Calculator extends StatelessWidget {
 
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
-          title: Center(child: Text('أجرة لاتور')),
+          title: Center(child: Text('أجرةلاتور')),
         ),
         body: Container(
             decoration: BoxDecoration(
@@ -64,9 +63,9 @@ class Calculator extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             TextField(
-                                decoration: InputDecoration(
-                                    labelText: "الأجرة كام"),
-
+                                cursorColor: Colors.black,
+                                decoration:
+                                    InputDecoration(labelText: "الأجرة كام"),
                                 keyboardType: TextInputType.number,
                                 inputFormatters: <TextInputFormatter>[
                                   WhitelistingTextInputFormatter(doubleRegExp)
