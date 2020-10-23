@@ -62,6 +62,16 @@ class Calculator extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
+                            Image.asset(
+                              'lib/assets/bus.png',
+                              width: store.state.passengersGroups.length == 0
+                                  ? MediaQuery.of(context).size.width
+                                  : 0,
+                              height: store.state.passengersGroups.length == 0
+                                  ? MediaQuery.of(context).size.height/2.5
+                                  : 0,
+                              fit: BoxFit.cover,
+                            ),
                             TextField(
                                 cursorColor: Colors.black,
                                 decoration:
