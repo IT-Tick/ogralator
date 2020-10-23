@@ -66,6 +66,7 @@ class Calculator extends StatelessWidget {
                             TextField(
                                 decoration: InputDecoration(
                                     labelText: "الأجرة كام"),
+
                                 keyboardType: TextInputType.number,
                                 inputFormatters: <TextInputFormatter>[
                                   WhitelistingTextInputFormatter(doubleRegExp)

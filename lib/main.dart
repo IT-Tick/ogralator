@@ -64,6 +64,7 @@ class OgralatorApp extends StatelessWidget {
               // is not restarted.
               primarySwatch: colorCustom,
               inputDecorationTheme: InputDecorationTheme(
+                  fillColor: Colors.white, filled: true,
                 enabledBorder: new OutlineInputBorder(
                   borderSide: BorderSide(color: generalColor),
                 ),
