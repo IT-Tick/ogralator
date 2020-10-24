@@ -90,9 +90,9 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
                   Container(
                       padding: const EdgeInsets.all(12.0),
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(4.0),
-                          border: Border.all(color: darkOrange)),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                      ),
                       child: Row(
                         children: <Widget>[
                           Align(

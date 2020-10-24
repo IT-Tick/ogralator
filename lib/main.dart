@@ -65,13 +65,13 @@ class OgralatorApp extends StatelessWidget {
               primarySwatch: colorCustom,
               inputDecorationTheme: InputDecorationTheme(
                   fillColor: Colors.white, filled: true,
-                enabledBorder: new OutlineInputBorder(
+                enabledBorder: new UnderlineInputBorder(
                   borderSide: BorderSide(color: generalColor),
                 ),
-                focusedBorder: new OutlineInputBorder(
+                focusedBorder: new UnderlineInputBorder(
                   borderSide: BorderSide(color: generalColor),
                 ),
-                border: OutlineInputBorder(),
+                border: UnderlineInputBorder(),
                 labelStyle: TextStyle(fontSize: 20.0),
               ),
               primaryTextTheme: TextTheme(
