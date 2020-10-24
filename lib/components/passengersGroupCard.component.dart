@@ -91,7 +91,7 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
                       padding: const EdgeInsets.all(12.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(4.0)),
                       ),
                       child: Row(
                         children: <Widget>[
