@@ -68,7 +68,7 @@ class Calculator extends StatelessWidget {
                                   ? MediaQuery.of(context).size.width
                                   : 0,
                               height: store.state.passengersGroups.length == 0
-                                  ? MediaQuery.of(context).size.height/2.5
+                                  ? MediaQuery.of(context).size.height / 2.5
                                   : 0,
                               fit: BoxFit.cover,
                             ),
