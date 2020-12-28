@@ -24,6 +24,8 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
   double remainder;
   final greyColor = HexColor("#E6E6E6");
   final darkOrange = HexColor("#F7BD42");
+  final numberOfPassengersController = new TextEditingController();
+  final paidMoneyController = new TextEditingController();
 
   void _numberOfPassengersChanged(text) {
     final int newNumberOfPassengers = text.isEmpty ? 0 : int.parse(text);
@@ -47,7 +49,13 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
   @override
   Widget build(BuildContext context) {
     _calculateGroupRemainder();
-
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      numberOfPassengersController.text = widget.group.numberOfPassengers == 0
+          ? ""
+          : widget.group.numberOfPassengers.toString();
+      paidMoneyController.text =
+          widget.group.paidMoney == 0 ? '' : widget.group.paidMoney.toString();
+    });
     return Container(
         margin: EdgeInsets.only(bottom: 20),
         child: Stack(
@@ -63,6 +71,7 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
                     children: <Widget>[
                       Expanded(
                         child: TextField(
+                          controller: numberOfPassengersController,
                           cursorColor: Colors.black,
                           decoration: InputDecoration(labelText: "كام نفر"),
                           keyboardType: TextInputType.number,
@@ -75,6 +84,7 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
                       SizedBox(width: 10),
                       Expanded(
                         child: TextField(
+                          controller: paidMoneyController,
                           cursorColor: Colors.black,
                           decoration: InputDecoration(labelText: "الفلوس"),
                           keyboardType: TextInputType.number,
@@ -91,7 +101,8 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
                       padding: const EdgeInsets.all(12.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(4.0)),
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(4.0)),
                       ),
                       child: Row(
                         children: <Widget>[
