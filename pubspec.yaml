@@ -17,7 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  hexcolor: 1.0.6
+  hexcolor: ^1.0.6
   flutter:
     sdk: flutter
   flutter_redux: ^0.6.0
