@@ -54,7 +54,7 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
           ? ""
           : widget.group.numberOfPassengers.toString();
       paidMoneyController.text =
-          widget.group.paidMoney == 0 ? '' : widget.group.paidMoney.toString();
+          widget.group.paidMoney == 0 ? '' : int.parse(widget.group.paidMoney.toString());
     });
     return Container(
         margin: EdgeInsets.only(bottom: 20),
