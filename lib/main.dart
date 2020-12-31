@@ -43,6 +43,7 @@ class OgralatorApp extends StatelessWidget {
         // Widgets will find and use this value as the `Store`.
         store: store,
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
@@ -64,7 +65,8 @@ class OgralatorApp extends StatelessWidget {
               // is not restarted.
               primarySwatch: colorCustom,
               inputDecorationTheme: InputDecorationTheme(
-                  fillColor: Colors.white, filled: true,
+                fillColor: Colors.white,
+                filled: true,
                 enabledBorder: new UnderlineInputBorder(
                   borderSide: BorderSide(color: generalColor),
                 ),
