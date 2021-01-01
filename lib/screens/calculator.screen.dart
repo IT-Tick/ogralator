@@ -86,6 +86,8 @@ class Calculator extends StatelessWidget {
                                 )),
                             SizedBox(height: 20),
                             Column(
+                                key: Key(store.state.passengersGroups.length
+                                    .toString()),
                                 children: store.state.passengersGroups
                                     .map((group) => Container(
                                           child: PassengersGroupCard(
@@ -110,7 +112,10 @@ class Calculator extends StatelessWidget {
                                 minWidth: double.infinity,
                                 buttonColor: statusBarColor,
                                 child: RaisedButton.icon(
-                                    onPressed: _newPassengersGroup,
+                                    onPressed: () {
+                                      _newPassengersGroup();
+                                      FocusScope.of(context).unfocus();
+                                    },
                                     textColor: Colors.black,
                                     label: Text(
                                       "اضافة أجرة",

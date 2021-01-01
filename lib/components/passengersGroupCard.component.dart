@@ -26,6 +26,7 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
   final darkOrange = HexColor("#F7BD42");
   final numberOfPassengersController = new TextEditingController();
   final paidMoneyController = new TextEditingController();
+  FocusNode myFocusNode = FocusNode();
 
   void _numberOfPassengersChanged(text) {
     final int newNumberOfPassengers = text.isEmpty ? 0 : int.parse(text);
@@ -47,15 +48,20 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    _calculateGroupRemainder();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  void initState() {
+    super.initState();
+    setState(() {
       numberOfPassengersController.text = widget.group.numberOfPassengers == 0
           ? ""
           : widget.group.numberOfPassengers.toString();
       paidMoneyController.text =
-          widget.group.paidMoney == 0 ? '' : int.parse(widget.group.paidMoney.toString());
+          widget.group.paidMoney == 0 ? "" : widget.group.paidMoney.toString();
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _calculateGroupRemainder();
     return Container(
         margin: EdgeInsets.only(bottom: 20),
         child: Stack(
@@ -135,7 +141,10 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
                     padding: EdgeInsets.only(left: 0, right: 0),
                     child: RaisedButton(
                         textColor: Colors.black,
-                        onPressed: widget.removeCard,
+                        onPressed: () {
+                          widget.removeCard();
+                          FocusScope.of(context).unfocus();
+                        },
                         child: Center(
                           child: Icon(Icons.clear),
                         ),
