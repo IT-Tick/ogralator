@@ -104,21 +104,20 @@ class Calculator extends StatelessWidget {
                                           ),
                                         ))
                                     .toList()),
-                            ButtonTheme(
-                                height: 50,
-                                minWidth: double.infinity,
-                                buttonColor: statusBarColor,
-                                child: RaisedButton.icon(
-                                    onPressed: () {
-                                      _newPassengersGroup();
-                                      FocusScope.of(context).unfocus();
-                                    },
-                                    textColor: Colors.black,
-                                    label: Text(
-                                      "اضافة أجرة",
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    icon: Icon(Icons.add)))
+                            ElevatedButton.icon(
+                                onPressed: () {
+                                  _newPassengersGroup();
+                                  FocusScope.of(context).unfocus();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: statusBarColor,
+                                    onPrimary: Colors.black,
+                                    minimumSize: Size(double.infinity, 50)),
+                                label: Text(
+                                  "اضافة أجرة",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                icon: Icon(Icons.add))
                           ],
                         ),
                       )

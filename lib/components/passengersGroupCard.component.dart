@@ -132,23 +132,19 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
             )),
             Positioned(
                 top: -15,
-                left: -15,
-                child: ButtonTheme(
-                    minWidth: 30,
-                    height: 30,
-                    padding: EdgeInsets.only(left: 0, right: 0),
-                    child: RaisedButton(
-                        textColor: Colors.black,
-                        onPressed: () {
-                          widget.removeCard();
-                          FocusScope.of(context).unfocus();
-                        },
-                        child: Center(
-                          child: Icon(Icons.clear),
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(100),
-                        ))))
+                left: -25,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        onPrimary: Colors.black,
+                        fixedSize: Size(30, 30),
+                        shape: CircleBorder()),
+                    onPressed: () {
+                      widget.removeCard();
+                      FocusScope.of(context).unfocus();
+                    },
+                    child: Center(
+                      child: Icon(Icons.clear),
+                    )))
           ],
         ));
   }
