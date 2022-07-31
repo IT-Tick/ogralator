@@ -17,16 +17,16 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  hexcolor: ^1.0.6
+  hexcolor: ^2.0.7
   flutter:
     sdk: flutter
-  flutter_redux: ^0.6.0
+  flutter_redux: ^0.10.0
   flutter_localizations:
     sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.5
 
 dev_dependencies:
   flutter_test:
