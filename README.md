@@ -8,21 +8,9 @@ It's a community project that IT Tick made public to everyone as an example of g
 
 [<img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/en_get.svg" width="30%">](https://play.google.com/store/apps/details?id=com.ogralator.android.ogralator)
 
-## Flutter version
+## Technical documentation
 
-This project uses [FVM](https://fvm.app/) to control flutter version.
-
-To install FVM:
-
-```bash
-dart pub global activate fvm
-```
-
-To use the correct flutter version:
-
-```bash
-fvm use
-```
+For more info about technicalities, please refer to [Technical ReadMe file](./README-Technical.md).
 
 ## Contribution
 

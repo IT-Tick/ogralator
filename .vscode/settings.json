@@ -13,5 +13,6 @@
     "source.fixAll": true,
     "source.organizeImports": true
   },
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "java.configuration.updateBuildConfiguration": "disabled"
 }

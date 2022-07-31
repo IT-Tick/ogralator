@@ -38,3 +38,8 @@ lib/generated_plugin_registrant.dart
 
 # FVM
 .fvm/flutter_sdk
+
+# Secrets
+play_config.json
+upload-keystore.jks
+**/fastlane/report.xml
