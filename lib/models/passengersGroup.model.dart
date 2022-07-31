@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
 class PassengersGroup {
-    final int numberOfPassengers;
-    final double paidMoney;
+  final int numberOfPassengers;
+  final double paidMoney;
 
-    PassengersGroup({
-        @required this.numberOfPassengers,
-        @required this.paidMoney
-    });
+  PassengersGroup({@required this.numberOfPassengers, @required this.paidMoney});
 
-    PassengersGroup.initialState() : numberOfPassengers = 0, paidMoney = 0;
+  PassengersGroup.initialState()
+      : numberOfPassengers = 0,
+        paidMoney = 0;
 }
