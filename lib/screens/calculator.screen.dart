@@ -66,7 +66,7 @@ class Calculator extends StatelessWidget {
                               height: store.state.passengersGroups.length == 0
                                   ? MediaQuery.of(context).size.height / 2.5
                                   : 0,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.contain,
                             ),
                             TextField(
                                 cursorColor: Colors.black,
