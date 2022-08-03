@@ -60,10 +60,6 @@ fi
 new_version="$major.$minor.$patch"
 echo "INFO:: New version is \"$new_version\""
 
-# Update pubspec.yaml
-echo "INFO:: Updating \"pubspec.yaml\" version to \"$new_version\""
-cat pubspec.yaml | sed "/$pub_version_field/s//version: $new_version/"  > pubspec.yaml
-
 # Create change logs
 today=$(date +"%Y-%m-%d")
 md_changelogs="## Version $new_version - $today\n\n"
@@ -121,22 +117,38 @@ then
   txt_changelogs+="\n"
 fi
 
+# Update pubspec.yaml
+echo "INFO:: Updating \"pubspec.yaml\" version to \"$new_version\""
+cat pubspec.yaml | sed "/$pub_version_field/s//version: $new_version/"  > pubspec.yaml
 
 # Update CHANGELOG.md
-echo "INFO:: Updating \"CHANGELOG.md\""
 changelog_placeholder="<!--#-->"
 
+echo "INFO:: Updating \"CHANGELOG.md\""
 cat CHANGELOG.md | sed "/^$changelog_placeholder/a $md_changelogs" > CHANGELOG.md
 
 # Add fastlane android change log
-echo "INFO:: Creating android change log for version \"$new_version\""
-echo -e $txt_changelogs > ./android/fastlane/metadata/android/ar/changelogs/$new_version.txt
+fastlane_path="./android/fastlane"
+changelog_path="$fastlane_path/metadata/android/ar/changelogs"
+
+version_code=$(basename -s .txt -a $(ls $changelog_path| sort -rnbf) | head -1)
+new_version_code=$(($version_code + 1))
+
+echo "INFO:: Creating android change log for version \"$new_version_code\""
+echo -e $txt_changelogs > $changelog_path/$new_version_code.txt
+
+# Add update fastlane version_code
+fastfile_path="$fastlane_path/Fastfile"
+
+echo "INFO:: Updating version code in \"Fastfile\""
+cat $fastfile_path | sed "/version_code: $version_code/s//version_code: $new_version_code/"  > $fastfile_path
 
 # Commit to git
 git add \
   ./pubspec.yaml \
   ./CHANGELOG.md \
-  ./android/fastlane/metadata/android/ar/changelogs/$new_version.txt
+  $changelog_path/$new_version_code.txt \
+  $fastfile_path
 
 git commit -m "chore: release v$new_version"
 git tag v$new_version

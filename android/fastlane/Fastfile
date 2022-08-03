@@ -9,6 +9,7 @@
 #
 #     https://docs.fastlane.tools/plugins/available-plugins
 #
+# Available fastlane tracks: production, beta, alpha, internal
 
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
@@ -24,8 +25,12 @@ platform :android do
   desc "Submit a new Beta Build to Google Play internal testing"
   lane :internal do
     gradle(task: "clean")
-    gradle(task: "assembleRelease")
-    upload_to_play_store(track: 'internal', skip_upload_changelogs: true)
+    gradle(task: "bundleRelease")
+    upload_to_play_store(
+      track: 'internal',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+      version_code: 1
+    )
 
     # sh "your_script.sh"
     # You can also use other beta testing services here
@@ -40,8 +45,12 @@ platform :android do
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(task: "clean")
-    gradle(task: "assembleRelease")
-    upload_to_play_store
+    gradle(task: "bundleRelease")
+    upload_to_play_store(
+      track: 'internal',
+      track_promote_to: 'production',
+      version_code: 1
+    )
   end
 
   desc "informational lane that displays the currently promoted version codes or release name"
