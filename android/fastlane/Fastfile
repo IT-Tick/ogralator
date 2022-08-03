@@ -14,6 +14,18 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
+
+def which(cmd)
+  exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
+  ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+    exts.each do |ext|
+      exe = File.join(path, "#{cmd}#{ext}")
+      return exe if File.executable?(exe) && !File.directory?(exe)
+    end
+  end
+  nil
+end
+
 default_platform(:android)
 
 platform :android do
@@ -24,12 +36,15 @@ platform :android do
 
   desc "Submit a new Beta Build to Google Play internal testing"
   lane :internal do
-    gradle(task: "clean")
-    gradle(task: "bundleRelease")
+    Dir.chdir "../.." do
+      fvm = which('fvm') || which('sh')
+      sh(fvm, "flutter", "packages", "get")
+      sh(fvm, "flutter", "clean")
+      sh(fvm, "flutter", "build", "appbundle")
+    end
     upload_to_play_store(
       track: 'internal',
       aab: '../build/app/outputs/bundle/release/app-release.aab',
-      version_code: 1
     )
 
     # sh "your_script.sh"
@@ -44,12 +59,9 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    gradle(task: "clean")
-    gradle(task: "bundleRelease")
     upload_to_play_store(
       track: 'internal',
       track_promote_to: 'production',
-      version_code: 1
     )
   end
 

@@ -7,25 +7,28 @@ pub_version_field=$(cat pubspec.yaml | grep -m 1 "version:")
 
 pub_version=$(echo "$pub_version_field" | cut -d " " -f 2)
 
+build_number=$(echo "$pub_version" | cut -d "+" -f 2)
+version_number=$(echo "$pub_version" | cut -d "+" -f 1)
+
 echo "INFO:: Pub version: \"$pub_version\""
 
-major=$(echo "$pub_version" | cut -d "." -f 1)
-minor=$(echo "$pub_version" | cut -d "." -f 2)
-patch=$(echo "$pub_version" | cut -d "." -f 3)
+major=$(echo "$version_number" | cut -d "." -f 1)
+minor=$(echo "$version_number" | cut -d "." -f 2)
+patch=$(echo "$version_number" | cut -d "." -f 3)
 
 # Get git change logs
-git_tag=$(git tag | grep "v$pub_version")
+git_tag=$(git tag | grep "v$version_number")
 git_last_commit=$(git rev-list HEAD | head -1)
 git_first_commit=$(git rev-list --max-parents=0 HEAD)
 
 
-if [[ $git_version ]]
+if [[ $git_tag ]]
 then
   echo "INFO:: Tag $git_tag found"
   echo "INFO:: Found tag with name \"$git_tag\""
   git_start_ref=$git_tag
 else
-  echo "WARNING:: Couldn't find tag with name \"v$pub_version\""
+  echo "WARNING:: Couldn't find tag with name \"v$version_number\""
   echo "INFO:: Falling back to the first commit"
   git_start_ref=$git_first_commit
 fi
@@ -58,12 +61,14 @@ else
 fi
 
 new_version="$major.$minor.$patch"
-echo "INFO:: New version is \"$new_version\""
+new_build_number=$(($build_number + 1))
+new_pub_version="$new_version+$new_build_number"
+echo "INFO:: New version is \"$new_pub_version\""
 
 # Create change logs
 today=$(date +"%Y-%m-%d")
-md_changelogs="## Version $new_version - $today\n\n"
-txt_changelogs="Version $new_version - $today\n\n"
+md_changelogs="## Version $new_version ($new_build_number) - $today\n\n"
+txt_changelogs="Version $new_version ($new_build_number) - $today\n\n"
 
 if [[ $breaking_logs ]]
 then
@@ -118,8 +123,8 @@ then
 fi
 
 # Update pubspec.yaml
-echo "INFO:: Updating \"pubspec.yaml\" version to \"$new_version\""
-cat pubspec.yaml | sed "/$pub_version_field/s//version: $new_version/"  > pubspec.yaml
+echo "INFO:: Updating \"pubspec.yaml\" version to \"$new_pub_version\""
+cat pubspec.yaml | sed "/$pub_version_field/s//version: $new_pub_version/"  > pubspec.yaml
 
 # Update CHANGELOG.md
 changelog_placeholder="<!--#-->"
@@ -128,27 +133,16 @@ echo "INFO:: Updating \"CHANGELOG.md\""
 cat CHANGELOG.md | sed "/^$changelog_placeholder/a $md_changelogs" > CHANGELOG.md
 
 # Add fastlane android change log
-fastlane_path="./android/fastlane"
-changelog_path="$fastlane_path/metadata/android/ar/changelogs"
+changelog_path="./android/fastlane/metadata/android/ar/changelogs"
 
-version_code=$(basename -s .txt -a $(ls $changelog_path| sort -rnbf) | head -1)
-new_version_code=$(($version_code + 1))
-
-echo "INFO:: Creating android change log for version \"$new_version_code\""
-echo -e $txt_changelogs > $changelog_path/$new_version_code.txt
-
-# Add update fastlane version_code
-fastfile_path="$fastlane_path/Fastfile"
-
-echo "INFO:: Updating version code in \"Fastfile\""
-cat $fastfile_path | sed "/version_code: $version_code/s//version_code: $new_version_code/"  > $fastfile_path
+echo "INFO:: Creating android change log for build number \"$new_build_number\""
+echo -e $txt_changelogs > $changelog_path/$new_build_number.txt
 
 # Commit to git
 git add \
   ./pubspec.yaml \
   ./CHANGELOG.md \
-  $changelog_path/$new_version_code.txt \
-  $fastfile_path
+  $changelog_path/$new_build_number.txt
 
 git commit -m "chore: release v$new_version"
 git tag v$new_version
