@@ -47,10 +47,13 @@ if [[ $breaking_logs ]]
 then
   echo "INFO:: Breaking changes found. Upgrading major version"
   major=$(($major + 1))
+  minor=0
+  patch=0
 elif [[ $feat_logs ]]
 then
   echo "INFO:: New features found. Upgrading minor version"
   minor=$(($minor + 1))
+  patch=0
 elif [[ $fix_logs  || $perf_logs ]]
 then
   echo "INFO:: New fixes found. Upgrading patch version"
