@@ -2,7 +2,7 @@
 
 ## Flutter version
 
-This project uses [FVM](https://fvm.app/) to control flutter version.
+This project uses [FVM](https://fvm.app/) to control Flutter version.
 
 To install FVM:
 
@@ -14,6 +14,21 @@ To use the correct flutter version:
 
 ```bash
 fvm use
+```
+
+## Ruby version
+
+For deployment to Android and iOS, this app uses [fastlane](https://docs.fastlane.tools/) which requires [Ruby](https://www.ruby-lang.org/) to be installed.
+
+This project uses [RVM](https://rvm.io/) to control Ruby version. To isntall RVM:
+
+- macOS or Linux: Follow [official documentation](https://rvm.io/rvm/install)
+- Windows: If official documentation doesn't work, try following [this Gist](https://gist.github.com/kirkelifson/2611affe02ce56ae6b04)
+
+Github actions run on linux system, so it's important to make sure `x86_64-linux` platfor is supported by running:
+
+```bash
+bundle lock --add-platform x86_64-linux
 ```
 
 ## Android Deployment
