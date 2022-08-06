@@ -1,24 +1,21 @@
 import 'package:ogralator/models/passengersGroup.model.dart';
 
 class AddPassengersGroupAction {
-    final PassengersGroup group;
+  final PassengersGroup group;
 
-    AddPassengersGroupAction(this.group);
+  AddPassengersGroupAction(this.group);
 }
 
 class EditPassengersGroupAction {
-    final PassengersGroup group;
-    final int numberOfPassengers;
-    final double paidMoney;
+  final PassengersGroup group;
+  final int numberOfPassengers;
+  final double paidMoney;
 
-
-    EditPassengersGroupAction(this.group, {
-        this.numberOfPassengers,
-        this.paidMoney});
+  EditPassengersGroupAction(this.group, {this.numberOfPassengers, this.paidMoney});
 }
 
 class DeletePassengersGroupAction {
-    final PassengersGroup group;
+  final PassengersGroup group;
 
-    DeletePassengersGroupAction(this.group);
+  DeletePassengersGroupAction(this.group);
 }

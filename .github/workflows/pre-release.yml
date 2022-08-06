@@ -1,0 +1,36 @@
+name: Github Pre Release
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  test:
+    needs: Testing
+    uses: ./.github/workflows/test.yml
+
+  github-pre-release:
+    name: Github Pre-Release
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup project
+        uses: ./.github/actions/setup
+
+      - name: Build APK
+        shell: bash
+        run: flutter build apk
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            LICENSE.md
+            build/app/outputs/apk/release/app-release.apk

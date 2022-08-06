@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
-
+import 'package:hexcolor/hexcolor.dart';
 import 'package:ogralator/models/appState.model.dart';
 import 'package:ogralator/reducers/appState.reducer.dart';
-
 import 'package:ogralator/screens/calculator.screen.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:redux/redux.dart';
 
 void main() {
   final store =
@@ -46,6 +43,7 @@ class OgralatorApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
           supportedLocales: [

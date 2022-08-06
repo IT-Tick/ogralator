@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ogralator/selectors/totalRemainder.selector.dart';
-import 'package:redux/redux.dart';
-
-import 'package:ogralator/utils/regExp.dart';
-
-import 'package:ogralator/models/appState.model.dart';
-import 'package:ogralator/models/passengersGroup.model.dart';
-
+import 'package:hexcolor/hexcolor.dart';
 import 'package:ogralator/actions/fare.actions.dart';
 import 'package:ogralator/actions/passengersMoney.actions.dart';
-
 import 'package:ogralator/components/passengersGroupCard.component.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:ogralator/models/appState.model.dart';
+import 'package:ogralator/models/passengersGroup.model.dart';
+import 'package:ogralator/selectors/totalRemainder.selector.dart';
+import 'package:ogralator/utils/regExp.dart';
+import 'package:redux/redux.dart';
 
 class Calculator extends StatelessWidget {
   final Store<AppState> store;
@@ -70,7 +66,7 @@ class Calculator extends StatelessWidget {
                               height: store.state.passengersGroups.length == 0
                                   ? MediaQuery.of(context).size.height / 2.5
                                   : 0,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.contain,
                             ),
                             TextField(
                                 cursorColor: Colors.black,
@@ -78,7 +74,8 @@ class Calculator extends StatelessWidget {
                                     InputDecoration(labelText: "الأجرة كام"),
                                 keyboardType: TextInputType.number,
                                 inputFormatters: <TextInputFormatter>[
-                                  WhitelistingTextInputFormatter(doubleRegExp)
+                                  FilteringTextInputFormatter.allow(
+                                      doubleRegExp)
                                 ], // Only numbers can be entered
                                 onChanged: _fareChanged,
                                 style: TextStyle(
@@ -107,21 +104,20 @@ class Calculator extends StatelessWidget {
                                           ),
                                         ))
                                     .toList()),
-                            ButtonTheme(
-                                height: 50,
-                                minWidth: double.infinity,
-                                buttonColor: statusBarColor,
-                                child: RaisedButton.icon(
-                                    onPressed: () {
-                                      _newPassengersGroup();
-                                      FocusScope.of(context).unfocus();
-                                    },
-                                    textColor: Colors.black,
-                                    label: Text(
-                                      "اضافة أجرة",
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    icon: Icon(Icons.add)))
+                            ElevatedButton.icon(
+                                onPressed: () {
+                                  _newPassengersGroup();
+                                  FocusScope.of(context).unfocus();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: statusBarColor,
+                                    onPrimary: Colors.black,
+                                    minimumSize: Size(double.infinity, 50)),
+                                label: Text(
+                                  "اضافة أجرة",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                icon: Icon(Icons.add))
                           ],
                         ),
                       )

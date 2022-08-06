@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:ogralator/utils/regExp.dart';
-
-import 'package:ogralator/models/passengersGroup.model.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:ogralator/models/passengersGroup.model.dart';
+import 'package:ogralator/utils/regExp.dart';
 
 class PassengersGroupCard extends StatefulWidget {
   final double fare;
@@ -65,7 +63,7 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
     return Container(
         margin: EdgeInsets.only(bottom: 20),
         child: Stack(
-          overflow: Overflow.visible,
+          clipBehavior: Clip.none,
           children: <Widget>[
             Card(
                 child: Container(
@@ -82,7 +80,7 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
                           decoration: InputDecoration(labelText: "كام نفر"),
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
-                            WhitelistingTextInputFormatter.digitsOnly
+                            FilteringTextInputFormatter.digitsOnly
                           ], // Only numbers can be entered
                           onChanged: _numberOfPassengersChanged,
                         ),
@@ -95,7 +93,7 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
                           decoration: InputDecoration(labelText: "الفلوس"),
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
-                            WhitelistingTextInputFormatter(doubleRegExp)
+                            FilteringTextInputFormatter.allow(doubleRegExp)
                           ], // Only numbers can be entered
                           onChanged: _paidMoneyChanged,
                         ),
@@ -134,23 +132,19 @@ class _PassengersGroupCardState extends State<PassengersGroupCard> {
             )),
             Positioned(
                 top: -15,
-                left: -15,
-                child: ButtonTheme(
-                    minWidth: 30,
-                    height: 30,
-                    padding: EdgeInsets.only(left: 0, right: 0),
-                    child: RaisedButton(
-                        textColor: Colors.black,
-                        onPressed: () {
-                          widget.removeCard();
-                          FocusScope.of(context).unfocus();
-                        },
-                        child: Center(
-                          child: Icon(Icons.clear),
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(100),
-                        ))))
+                left: -25,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        onPrimary: Colors.black,
+                        fixedSize: Size(30, 30),
+                        shape: CircleBorder()),
+                    onPressed: () {
+                      widget.removeCard();
+                      FocusScope.of(context).unfocus();
+                    },
+                    child: Center(
+                      child: Icon(Icons.clear),
+                    )))
           ],
         ));
   }

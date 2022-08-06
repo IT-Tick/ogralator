@@ -1,0 +1,21 @@
+name: Testing
+
+on:
+  workflow_call:
+  pull_request:
+
+jobs:
+  test:
+    # This job will run on ubuntu virtual machine
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup project
+        uses: ./.github/actions/setup
+
+      # Statically analyze the Dart code for any errors.
+      - name: Run static analysis
+        shell: bash
+        run: flutter analyze .

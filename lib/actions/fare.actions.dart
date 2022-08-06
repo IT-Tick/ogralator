@@ -1,5 +1,5 @@
 class EditFareAction {
-    final double fare;
+  final double fare;
 
-    EditFareAction(this.fare);
+  EditFareAction(this.fare);
 }

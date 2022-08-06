@@ -1,0 +1,82 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+
+def which(cmd)
+  exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
+  ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+    exts.each do |ext|
+      exe = File.join(path, "#{cmd}#{ext}")
+      return exe if File.executable?(exe) && !File.directory?(exe)
+    end
+  end
+  nil
+end
+
+# Available fastlane tracks: production, beta, alpha, internal
+def build_and_upload(track)
+  Dir.chdir "../.." do
+    fvm = which('fvm') || which('sh')
+    sh(fvm, "flutter", "build", "appbundle")
+  end
+  upload_to_play_store(
+    track: track,
+    aab: '../build/app/outputs/bundle/release/app-release.aab',
+  )
+end
+
+def track_info(track)
+  google_play_track_version_codes(track: track)
+  google_play_track_release_names(track: track)
+end
+
+default_platform(:android)
+
+platform :android do
+
+  desc "Submit a new Beta Build to Google Play internal testing"
+  lane :internal do
+    build_and_upload('internal')
+  end
+
+  desc "Internal track currently promoted version codes and release name"
+  lane :internal_info do
+    track_info('internal')
+  end
+
+  desc "Submit a new Beta Build to Google Play internal testing"
+  lane :alpha do
+    build_and_upload('alpha')
+  end
+
+  desc "alpha track currently promoted version codes and release name"
+  lane :alpha_info do
+    track_info('alpha')
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :production do
+    upload_to_play_store(
+      track: 'alpha',
+      track_promote_to: 'production',
+    )
+  end
+
+  desc "informational lane that displays the currently promoted version codes or release name"
+  lane :info do
+    track_info('production')
+  end
+
+end

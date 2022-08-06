@@ -35,3 +35,14 @@ lib/generated_plugin_registrant.dart
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+# FVM
+.fvm/flutter_sdk
+
+# Fastlane
+**/fastlane/report.xml
+
+# Secrets
+play_config.json*
+upload-keystore.jks*
+key.properties*

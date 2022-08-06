@@ -1,0 +1,25 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Create release",
+      "type": "shell",
+      "command": "sh create-release.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: Publish internal track",
+      "type": "shell",
+      "command": "cd android && bundle exec fastlane internal",
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: Publish alpha track",
+      "type": "shell",
+      "command": "cd android && bundle exec fastlane alpha",
+      "problemMatcher": []
+    }
+  ]
+}
