@@ -15,14 +15,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## Android
 
-### android test
-
-```sh
-[bundle exec] fastlane android test
-```
-
-Runs all the tests
-
 ### android internal
 
 ```sh
@@ -31,18 +23,34 @@ Runs all the tests
 
 Submit a new Beta Build to Google Play internal testing
 
-### android info_internal
+### android internal_info
 
 ```sh
-[bundle exec] fastlane android info_internal
+[bundle exec] fastlane android internal_info
 ```
 
-informational lane that displays the currently promoted version codes or release name
+Internal track currently promoted version codes and release name
 
-### android deploy
+### android alpha
 
 ```sh
-[bundle exec] fastlane android deploy
+[bundle exec] fastlane android alpha
+```
+
+Submit a new Beta Build to Google Play internal testing
+
+### android alpha_info
+
+```sh
+[bundle exec] fastlane android alpha_info
+```
+
+alpha track currently promoted version codes and release name
+
+### android production
+
+```sh
+[bundle exec] fastlane android production
 ```
 
 Deploy a new version to the Google Play

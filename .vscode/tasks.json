@@ -10,9 +10,15 @@
       "problemMatcher": []
     },
     {
-      "label": "Android: Publish internally",
+      "label": "Android: Publish internal track",
       "type": "shell",
       "command": "cd android && bundle exec fastlane internal",
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: Publish alpha track",
+      "type": "shell",
+      "command": "cd android && bundle exec fastlane alpha",
       "problemMatcher": []
     }
   ]

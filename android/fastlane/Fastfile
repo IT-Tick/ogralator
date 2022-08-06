@@ -9,7 +9,6 @@
 #
 #     https://docs.fastlane.tools/plugins/available-plugins
 #
-# Available fastlane tracks: production, beta, alpha, internal
 
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
@@ -26,48 +25,58 @@ def which(cmd)
   nil
 end
 
+# Available fastlane tracks: production, beta, alpha, internal
+def build_and_upload(track)
+  Dir.chdir "../.." do
+    fvm = which('fvm') || which('sh')
+    sh(fvm, "flutter", "build", "appbundle")
+  end
+  upload_to_play_store(
+    track: track,
+    aab: '../build/app/outputs/bundle/release/app-release.aab',
+  )
+end
+
+def track_info(track)
+  google_play_track_version_codes(track: track)
+  google_play_track_release_names(track: track)
+end
+
 default_platform(:android)
 
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
 
   desc "Submit a new Beta Build to Google Play internal testing"
   lane :internal do
-    Dir.chdir "../.." do
-      fvm = which('fvm') || which('sh')
-      sh(fvm, "flutter", "packages", "get")
-      sh(fvm, "flutter", "clean")
-      sh(fvm, "flutter", "build", "appbundle")
-    end
-    upload_to_play_store(
-      track: 'internal',
-      aab: '../build/app/outputs/bundle/release/app-release.aab',
-    )
-
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
+    build_and_upload('internal')
   end
 
-  desc "informational lane that displays the currently promoted version codes or release name"
-  lane :info_internal do
-    google_play_track_version_codes(track: 'internal')
-    google_play_track_release_names(track: 'internal')
+  desc "Internal track currently promoted version codes and release name"
+  lane :internal_info do
+    track_info('internal')
+  end
+
+  desc "Submit a new Beta Build to Google Play internal testing"
+  lane :alpha do
+    build_and_upload('alpha')
+  end
+
+  desc "alpha track currently promoted version codes and release name"
+  lane :alpha_info do
+    track_info('alpha')
   end
 
   desc "Deploy a new version to the Google Play"
-  lane :deploy do
+  lane :production do
     upload_to_play_store(
-      track: 'internal',
+      track: 'alpha',
       track_promote_to: 'production',
     )
   end
 
   desc "informational lane that displays the currently promoted version codes or release name"
   lane :info do
-    google_play_track_version_codes
-    google_play_track_release_names
+    track_info('production')
   end
+
 end
