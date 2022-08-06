@@ -27,9 +27,14 @@ end
 
 # Available fastlane tracks: production, beta, alpha, internal
 def build_and_upload(track)
+  fvm = which('fvm')
   Dir.chdir "../.." do
-    fvm = which('fvm') || which('sh')
-    sh(fvm, "flutter", "build", "appbundle")
+    if fvm
+    then
+      sh(fvm, "flutter", "build", "appbundle")
+    else
+      sh("flutter", "build", "appbundle")
+    end
   end
   upload_to_play_store(
     track: track,
