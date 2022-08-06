@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    needs: Testing
+    name: Testing
     uses: ./.github/workflows/test.yml
 
   github-pre-release:
