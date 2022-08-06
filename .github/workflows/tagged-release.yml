@@ -1,0 +1,53 @@
+name: Tagged Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
+  github-release:
+    name: Github Release
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup project
+        uses: ./.github/actions/setup
+
+      - name: Build APK
+        shell: bash
+        run: flutter build apk
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            LICENSE.md
+            build/app/outputs/apk/release/app-release.apk
+
+  android-alpha-release:
+    name: Android Alpha Release
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup project
+        uses: ./.github/actions/setup
+
+      - name: Configure play store deployment
+        uses: ./.github/actions/configure-play-store
+
+      - name: Release app to Alpha track 🚀
+        run: |
+          cd android/
+          bundle exec fastlane alpha
+          bundle exec fastlane alpha_info

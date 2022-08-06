@@ -1,0 +1,24 @@
+name: Production Release
+
+on: workflow_dispatch
+
+jobs:
+  android-production-release:
+    name: Android Production Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup project
+        uses: ./.github/actions/setup
+
+      - name: Configure play store deployment
+        uses: ./.github/actions/configure-play-store
+
+      - name: Release app to Production track 🚀
+        run: |
+          cd android/
+          bundle exec fastlane production
+          bundle exec fastlane info
+

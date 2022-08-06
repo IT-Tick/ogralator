@@ -6,6 +6,15 @@ runs:
   using: composite
   steps:
     - uses: kuhnroyal/flutter-fvm-config-action@v1
+
+    - name: Cache Primes
+      id: cache-build
+      uses: actions/cache@v3
+      with:
+        path: |
+          build
+        key: ${{ runner.os }}-build
+
     - uses: subosito/flutter-action@v2
       with:
         flutter-version: ${{ env.FLUTTER_VERSION }}
