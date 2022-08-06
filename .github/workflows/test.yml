@@ -14,6 +14,10 @@ jobs:
 
       - name: Setup project
         uses: ./.github/actions/setup
+        with:
+          PLAY_CONFIG_JSON: ${{ secrets.PLAY_CONFIG_JSON }}
+          UPLOAD_KEYSTORE_KJS: ${{ secrets.UPLOAD_KEYSTORE_KJS }}
+          KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
 
       # Statically analyze the Dart code for any errors.
       - name: Run static analysis

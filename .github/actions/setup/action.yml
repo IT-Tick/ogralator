@@ -2,6 +2,17 @@ name: Setup Action
 
 description: Setup Project
 
+inputs:
+  PLAY_CONFIG_JSON:
+    description: 'Play store config in base64 format'
+    required: true
+  UPLOAD_KEYSTORE_KJS:
+    description: 'Upload keystore in base64 format'
+    required: true
+  KEY_PROPERTIES:
+    description: 'Key properties in base64 format'
+    required: true
+
 runs:
   using: composite
   steps:
@@ -28,3 +39,10 @@ runs:
     - name: Install packages
       shell: bash
       run: flutter pub get
+
+    - name: Set Play Store Configurations
+      uses: ./.github/actions/play-store-config
+      with:
+        PLAY_CONFIG_JSON: ${{ inputs.PLAY_CONFIG_JSON }}
+        UPLOAD_KEYSTORE_KJS: ${{ inputs.UPLOAD_KEYSTORE_KJS }}
+        KEY_PROPERTIES: ${{ inputs.KEY_PROPERTIES }}

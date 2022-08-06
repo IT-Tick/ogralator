@@ -20,6 +20,10 @@ jobs:
 
       - name: Setup project
         uses: ./.github/actions/setup
+        with:
+          PLAY_CONFIG_JSON: ${{ secrets.PLAY_CONFIG_JSON }}
+          UPLOAD_KEYSTORE_KJS: ${{ secrets.UPLOAD_KEYSTORE_KJS }}
+          KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
 
       - name: Build APK
         shell: bash
