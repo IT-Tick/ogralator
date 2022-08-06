@@ -43,6 +43,7 @@ lib/generated_plugin_registrant.dart
 **/fastlane/report.xml
 
 # Secrets
-play_config.json*
-upload-keystore.jks*
-key.properties*
+secrets/
+play_config.json
+upload-keystore.jks
+key.properties

@@ -23,10 +23,11 @@ runs:
     - name: Configure Keystore
       shell: bash
       run: |
-        echo "$ANDROID_KEYSTORE_FILE" > android/upload-keystore.jks.b64
-        base64 -d -i android/upload-keystore.jks.b64 > android/upload-keystore.jks
-        echo "KEY_PROPERTIES" > android/key.properties.b64
-        base64 -d -i android/key.properties.b64 > android/key.properties
+        mkdir -p secrets/
+        echo "$ANDROID_KEYSTORE_FILE" > secrets/upload-keystore.jks.b64
+        base64 -d -i secrets/upload-keystore.jks.b64 > android/upload-keystore.jks
+        echo "KEY_PROPERTIES" > secrets/key.properties.b64
+        base64 -d -i secrets/key.properties.b64 > android/key.properties
       env:
         UPLOAD_KEYSTORE_KJS: ${{ inputs.UPLOAD_KEYSTORE_KJS }}
         KEY_PROPERTIES: ${{ inputs.KEY_PROPERTIES }}
@@ -34,7 +35,8 @@ runs:
     - name: Create Google Play Config file
       shell: bash
       run : |
-        echo "$PLAY_CONFIG_JSON" > android/play_config.json.b64
-        base64 -d -i android/play_config.json.b64 > android/play_config.json
+        mkdir -p secrets/
+        echo "$PLAY_CONFIG_JSON" > secrets/play_config.json.b64
+        base64 -d -i secrets/play_config.json.b64 > android/play_config.json
       env:
         PLAY_CONFIG_JSON: ${{ inputs.PLAY_CONFIG_JSON }}
