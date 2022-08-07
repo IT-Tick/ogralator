@@ -142,12 +142,16 @@ echo "INFO:: Creating android change log for build number \"$new_build_number\""
 echo -e $txt_changelogs > $changelog_path/$new_build_number.txt
 
 # Commit to git
+echo "INFO:: Committing changes to git"
 git add \
   ./pubspec.yaml \
   ./CHANGELOG.md \
   $changelog_path/$new_build_number.txt
 
 git commit -m "chore: release v$new_version"
+
+# Create tag
+echo "INFO:: Create new tag \"v$new_version\""
 git tag v$new_version
 
 exit 0
